@@ -937,7 +937,7 @@ format.
 
 #### Online playground
 
-   * https://hocon-playground.avelier.dev/
+   * https://hocon-playground.tehbrian.dev
 
 # Maintenance notes
 
