@@ -638,7 +638,7 @@ class PublicApiTest extends TestUtils {
         System.setProperty("config.strategy", classOf[TestStrategy].getCanonicalName)
 
         try {
-            val incovationsBeforeTest = TestStrategy.getIncovations()
+            val invocationsBeforeTest = TestStrategy.getInvocations()
             val loaderA1 = new TestClassLoader(this.getClass().getClassLoader(),
                 Map("reference.conf" -> resourceFile("a_1.conf").toURI.toURL()))
 
@@ -647,7 +647,7 @@ class PublicApiTest extends TestUtils {
             }
             ConfigFactory.load()
             assertEquals(1, configA1.getInt("a"))
-            assertEquals(2, TestStrategy.getIncovations() - incovationsBeforeTest)
+            assertEquals(2, TestStrategy.getInvocations() - invocationsBeforeTest)
         } finally {
             System.clearProperty("config.strategy")
         }
@@ -941,7 +941,7 @@ class PublicApiTest extends TestUtils {
         assertEquals("config.file is not set", null, System.getProperty("config.file"))
         val old = System.getProperty("config.resource")
         try {
-            System.setProperty("config.resource", "donotexists.conf")
+            System.setProperty("config.resource", "nonexistent.conf")
             intercept[ConfigException.IO] {
                 ConfigFactory.load()
             }
@@ -964,7 +964,7 @@ class PublicApiTest extends TestUtils {
         assertEquals("config.resource is not set", null, System.getProperty("config.resource"))
         val old = System.getProperty("config.file")
         try {
-            System.setProperty("config.file", "donotexists.conf")
+            System.setProperty("config.file", "nonexistent.conf")
             intercept[ConfigException.IO] {
                 ConfigFactory.load()
             }
@@ -1185,6 +1185,6 @@ class TestStrategy extends DefaultConfigLoadingStrategy {
 
 object TestStrategy {
     private var invocations = 0
-    def getIncovations() = invocations
+    def getInvocations() = invocations
     def increment() = invocations += 1
 }

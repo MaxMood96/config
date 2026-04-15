@@ -388,7 +388,7 @@ For purposes of concatenation, "array" also means "substitution
 that resolves to an array" and "object" also means "substitution
 that resolves to an object."
 
-Within an field value or array element, if only non-newline
+Within a field value or array element, if only non-newline
 whitespace separates the end of a first array or object or
 substitution from the start of a second array or object or
 substitution, the two values are concatenated. Newlines may occur
@@ -840,7 +840,7 @@ because the self reference has to "look back" to an undefined `a`:
 
     a = ${?a}foo
 
-In general, in resolving a substitution the implementation must:
+In general, in resolving a substitution, the implementation must:
 
  - lazy-evaluate the substitution target so there's no
    "circularity by side effect"
@@ -1301,7 +1301,7 @@ This can use the general "units format" described above; bare
 numbers are taken to be in milliseconds already, while strings are
 parsed as a number plus an optional unit string.
 
-The supported unit strings for duration are case sensitive and
+The supported unit strings for duration are case-sensitive and
 must be lowercase. Exactly these strings are supported:
 
  - `ns`, `nano`, `nanos`, `nanosecond`, `nanoseconds`
@@ -1321,7 +1321,7 @@ This can use the general "units format" described above; bare
 numbers are taken to be in days, while strings are
 parsed as a number plus an optional unit string.
 
-The supported unit strings for period are case sensitive and
+The supported unit strings for period are case-sensitive and
 must be lowercase. Exactly these strings are supported:
 
  - `d`, `day`, `days`
@@ -1542,7 +1542,7 @@ It's recommended that HOCON keys always use lowercase, because
 environment variables generally are capitalized. This avoids
 naming collisions between environment variables and configuration
 properties. (While on Windows getenv() is generally not
-case-sensitive, the lookup will be case sensitive all the way
+case-sensitive, the lookup will be case-sensitive all the way
 until the env variable fallback lookup is reached).
 
 See also the notes below on Windows and case sensitivity.
@@ -1597,7 +1597,7 @@ Differences include but are probably not limited to:
 
 ## Note on Windows and case sensitivity of environment variables
 
-HOCON's lookup of environment variable values is always case sensitive, but
+HOCON's lookup of environment variable values is always case-sensitive, but
 Linux and Windows differ in their handling of case.
 
 Linux allows one to define multiple environment variables with the same
@@ -1608,18 +1608,18 @@ is straightforward; ie just make sure you define all your vars with the required
 Windows is more confusing. Windows environment variables names may contain a
 mix of upper and lowercase characters, eg "Path", however Windows does not
 allow one to define multiple instances of the same name but differing in case.
-Whilst accessing env vars in Windows is case insensitive, accessing env vars in
-HOCON is case sensitive.
+Whilst accessing env vars in Windows is case-insensitive, accessing env vars in
+HOCON is case-sensitive.
 So if you know that you HOCON needs "PATH" then you must ensure that
 the variable is defined as "PATH" rather than some other name such as
 "Path" or "path".
 However, Windows does not allow us to change the case of an existing env var; we can't
-simply redefine the var with an upper case name.
+simply redefine the var with an uppercase name.
 The only way to ensure that your environment variables have the desired case
 is to first undefine all the env vars that you will depend on then redefine
 them with the required case.
 
-For example, the the ambient environment might have this definition ...
+For example, the ambient environment might have this definition ...
 
 ```
 set Path=A;B;C
