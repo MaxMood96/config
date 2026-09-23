@@ -839,6 +839,15 @@ class ConfigTest extends TestUtils {
     }
 
     @Test
+    def negativeNumberWithoutIntegerPartIsString() {
+        // like .33, -.33 is not a JSON number, but still converts to a number on request
+        val conf = parseConfig("a = -.33")
+        assertEquals(ConfigValueType.STRING, conf.getValue("a").valueType())
+        assertEquals("-.33", conf.getString("a"))
+        assertEquals(-0.33, conf.getDouble("a"), 1e-6)
+    }
+
+    @Test
     def test01MergingOtherFormats() {
         val conf = ConfigFactory.load("test01")
 
